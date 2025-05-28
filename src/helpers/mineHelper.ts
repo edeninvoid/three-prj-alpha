@@ -3,7 +3,7 @@ import { Cell } from "@/types/mineType";
 export const MAX_SCORES_PER_DIFFICULTY = 5;
 
 export const DIFFICULTY_SETTINGS = {
-  easy: { rows: 9, cols: 9, mines: 1 },
+  easy: { rows: 9, cols: 9, mines: 10 },
   medium: { rows: 16, cols: 16, mines: 30 },
   hard: { rows: 16, cols: 30, mines: 50 },
 };
