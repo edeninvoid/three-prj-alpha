@@ -1,10 +1,10 @@
-'use client'
+"use client";
 
-import { motion } from 'framer-motion';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { OrbitControls } from '@react-three/drei';
-import * as THREE from 'three';
-import { useState, useRef, useEffect, useMemo } from 'react';
+import { motion } from "framer-motion";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { OrbitControls } from "@react-three/drei";
+import * as THREE from "three";
+import { useState, useRef, useEffect, useMemo } from "react";
 
 // Background particles
 const backgroundParticles = Array.from({ length: 100 }, () => ({
@@ -14,11 +14,15 @@ const backgroundParticles = Array.from({ length: 100 }, () => ({
     (Math.random() - 0.5) * 5,
   ] as [number, number, number],
   size: Math.random() * 0.2 + 0.1,
-  points: Array.from({ length: 8 }, () => [
-    (Math.random() - 0.5) * 0.5,
-    (Math.random() - 0.5) * 0.5,
-    (Math.random() - 0.5) * 0.5,
-  ] as [number, number, number]),
+  points: Array.from(
+    { length: 8 },
+    () =>
+      [
+        (Math.random() - 0.5) * 0.5,
+        (Math.random() - 0.5) * 0.5,
+        (Math.random() - 0.5) * 0.5,
+      ] as [number, number, number],
+  ),
 }));
 
 // Firework particle type
@@ -33,10 +37,14 @@ type FireworkParticle = {
   points: [number, number, number][];
 };
 
-function LineStructure({ points, color, opacity }: {
-  points: THREE.Vector3[],
-  color: THREE.Color,
-  opacity: number
+function LineStructure({
+  points,
+  color,
+  opacity,
+}: {
+  points: THREE.Vector3[];
+  color: THREE.Color;
+  opacity: number;
 }) {
   const geometry = useMemo(() => {
     return new THREE.BufferGeometry().setFromPoints(points);
@@ -57,14 +65,14 @@ function LineStructure({ points, color, opacity }: {
 function BackgroundParticles() {
   // Developer-like color palette
   const devColors = [
-    new THREE.Color('#1e293b'), // slate-800
-    new THREE.Color('#334155'), // slate-700
-    new THREE.Color('#0f172a'), // slate-900
-    new THREE.Color('#0c4a6e'), // sky-900
-    new THREE.Color('#082f49'), // sky-950
-    new THREE.Color('#1e3a8a'), // blue-900
-    new THREE.Color('#0f766e'), // teal-800 - adding some teal for terminal-like colors
-    new THREE.Color('#064e3b'), // emerald-900 - adding some green for terminal-like colors
+    new THREE.Color("#1e293b"), // slate-800
+    new THREE.Color("#334155"), // slate-700
+    new THREE.Color("#0f172a"), // slate-900
+    new THREE.Color("#0c4a6e"), // sky-900
+    new THREE.Color("#082f49"), // sky-950
+    new THREE.Color("#1e3a8a"), // blue-900
+    new THREE.Color("#0f766e"), // teal-800 - adding some teal for terminal-like colors
+    new THREE.Color("#064e3b"), // emerald-900 - adding some green for terminal-like colors
   ];
 
   // Create line geometries for each particle
@@ -81,13 +89,28 @@ function BackgroundParticles() {
       if (i % 3 === 0) {
         // Create a cube-like structure
         const points = [
-          [-1, -1, -1], [1, -1, -1], [1, 1, -1], [-1, 1, -1], [-1, -1, -1],
-          [-1, -1, 1], [1, -1, 1], [1, 1, 1], [-1, 1, 1], [-1, -1, 1],
-          [1, -1, 1], [1, -1, -1], [1, 1, -1], [1, 1, 1], [-1, 1, 1], [-1, 1, -1]
+          [-1, -1, -1],
+          [1, -1, -1],
+          [1, 1, -1],
+          [-1, 1, -1],
+          [-1, -1, -1],
+          [-1, -1, 1],
+          [1, -1, 1],
+          [1, 1, 1],
+          [-1, 1, 1],
+          [-1, -1, 1],
+          [1, -1, 1],
+          [1, -1, -1],
+          [1, 1, -1],
+          [1, 1, 1],
+          [-1, 1, 1],
+          [-1, 1, -1],
         ];
 
         points.forEach(([x, y, z]) => {
-          linePoints.push(new THREE.Vector3(x * size, y * size, z * size).add(basePosition));
+          linePoints.push(
+            new THREE.Vector3(x * size, y * size, z * size).add(basePosition),
+          );
         });
       } else if (i % 3 === 1) {
         // Create a star-like structure
@@ -96,28 +119,40 @@ function BackgroundParticles() {
           const nextAngle = ((j + 1) / 8) * Math.PI * 2;
 
           linePoints.push(new THREE.Vector3(0, 0, 0).add(basePosition));
-          linePoints.push(new THREE.Vector3(
-            Math.cos(angle) * size * 1.5,
-            Math.sin(angle) * size * 1.5,
-            0
-          ).add(basePosition));
+          linePoints.push(
+            new THREE.Vector3(
+              Math.cos(angle) * size * 1.5,
+              Math.sin(angle) * size * 1.5,
+              0,
+            ).add(basePosition),
+          );
 
-          linePoints.push(new THREE.Vector3(
-            Math.cos(angle) * size * 1.5,
-            Math.sin(angle) * size * 1.5,
-            0
-          ).add(basePosition));
-          linePoints.push(new THREE.Vector3(
-            Math.cos(nextAngle) * size * 1.5,
-            Math.sin(nextAngle) * size * 1.5,
-            0
-          ).add(basePosition));
+          linePoints.push(
+            new THREE.Vector3(
+              Math.cos(angle) * size * 1.5,
+              Math.sin(angle) * size * 1.5,
+              0,
+            ).add(basePosition),
+          );
+          linePoints.push(
+            new THREE.Vector3(
+              Math.cos(nextAngle) * size * 1.5,
+              Math.sin(nextAngle) * size * 1.5,
+              0,
+            ).add(basePosition),
+          );
         }
       } else {
         // Create a tetrahedron-like structure
         const points = [
-          [0, size, 0], [size, -size, size], [-size, -size, size], [0, size, 0],
-          [0, -size, -size], [size, -size, size], [0, -size, -size], [-size, -size, size]
+          [0, size, 0],
+          [size, -size, size],
+          [-size, -size, size],
+          [0, size, 0],
+          [0, -size, -size],
+          [size, -size, size],
+          [0, -size, -size],
+          [-size, -size, size],
         ];
 
         points.forEach(([x, y, z]) => {
@@ -131,6 +166,7 @@ function BackgroundParticles() {
         opacity: 0.6 + Math.random() * 0.4, // Varying opacity for depth
       };
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -195,7 +231,9 @@ function FireworkParticles({ particles }: { particles: FireworkParticle[] }) {
         return (
           <group key={particle.id} position={particle.position}>
             <LineStructure
-              points={particle.points.map(([x, y, z]) => new THREE.Vector3(x, y, z))}
+              points={particle.points.map(
+                ([x, y, z]) => new THREE.Vector3(x, y, z),
+              )}
               color={particle.color}
               opacity={particle.life / particle.maxLife}
             />
@@ -214,7 +252,7 @@ function Scene() {
   // Clean up expired particles
   useEffect(() => {
     const interval = setInterval(() => {
-      setFireworks(prev => prev.filter(p => p.life > 0));
+      setFireworks((prev) => prev.filter((p) => p.life > 0));
     }, 100);
 
     return () => clearInterval(interval);
@@ -242,12 +280,12 @@ function Scene() {
 
     // Developer-like color palette for fireworks
     const devColors = [
-      new THREE.Color('#38bdf8'), // sky-400
-      new THREE.Color('#0ea5e9'), // sky-500
-      new THREE.Color('#0284c7'), // sky-600
-      new THREE.Color('#2563eb'), // blue-600
-      new THREE.Color('#3b82f6'), // blue-500
-      new THREE.Color('#60a5fa'), // blue-400
+      new THREE.Color("#38bdf8"), // sky-400
+      new THREE.Color("#0ea5e9"), // sky-500
+      new THREE.Color("#0284c7"), // sky-600
+      new THREE.Color("#2563eb"), // blue-600
+      new THREE.Color("#3b82f6"), // blue-500
+      new THREE.Color("#60a5fa"), // blue-400
     ];
 
     for (let i = 0; i < particleCount; i++) {
@@ -299,27 +337,36 @@ function Scene() {
       // Create particle
       newParticles.push({
         id: nextId.current++,
-        position: [clickPoint.x, clickPoint.y, clickPoint.z] as [number, number, number],
+        position: [clickPoint.x, clickPoint.y, clickPoint.z] as [
+          number,
+          number,
+          number,
+        ],
         velocity: [vx, vy, vz] as [number, number, number],
         color: devColors[i % devColors.length],
         size: size,
         life: 1.0,
         maxLife: 1.0,
-        points: linePoints.map(p => [p.x, p.y, p.z]) as [number, number, number][]
+        points: linePoints.map((p) => [p.x, p.y, p.z]) as [
+          number,
+          number,
+          number,
+        ][],
       });
     }
 
-    setFireworks(prev => [...prev, ...newParticles]);
+    setFireworks((prev) => [...prev, ...newParticles]);
   };
 
   // Add click event listener
   useEffect(() => {
     const canvas = gl.domElement;
-    canvas.addEventListener('click', handleCanvasClick);
+    canvas.addEventListener("click", handleCanvasClick);
 
     return () => {
-      canvas.removeEventListener('click', handleCanvasClick);
+      canvas.removeEventListener("click", handleCanvasClick);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gl]);
 
   return (
